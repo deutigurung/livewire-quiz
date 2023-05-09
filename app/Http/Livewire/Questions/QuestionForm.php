@@ -10,10 +10,19 @@ class QuestionForm extends Component
     public Question $question;
     public bool $editing = false;
 
+    public array $questionOptions = [];
+
     public function mount(Question $question){
         $this->question = $question;
         if($this->question->exists){
             $this->editing = true;
+            foreach($this->question->questionOptions as $options){
+                $this->questionOptions[] = [
+                    'id' => $options->id,
+                    'option' => $options->option,
+                    'correct' => $options->correct,
+                ];
+            }
         }
     }
     public function render()
@@ -33,6 +42,21 @@ class QuestionForm extends Component
             'question.code_snippet' => ['string','nullable'],
             'question.answer_explanation' => ['string','nullable'],
             'question.more_info_link' => ['url','nullable'],
+            'questionOptions' => ['required','array'],
+            'questionOptions.*.option' => ['string','required'],
         ];
+    }
+
+    public function addQuestionsOption() {
+        $this->questionOptions[] = [
+            'option' => '', 
+            'correct' => false
+        ];
+    }
+
+    public function removeQuestionsOption(int $index) {
+        //remove current index and update array
+        unset($this->questionOptions[$index]);
+        $this->questionOptions = array_values($this->questionOptions);
     }
 }

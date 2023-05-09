@@ -16,4 +16,8 @@ class Question extends Model
         'answer_explanation',
         'more_info_link',
     ];
+
+    public function questionOptions() {
+        return $this->hasMany(QuestionOption::class);
+    }
 }
