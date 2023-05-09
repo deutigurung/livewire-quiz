@@ -33,17 +33,24 @@ class QuestionForm extends Component
     public function submitFormData(){
         $this->validate();
         $this->question->save();
+        //remove question options
+        $this->question->questionOptions()->delete();
+
+        foreach($this->questionOptions as $option){
+            //create question multiple options
+            $this->question->questionOptions()->create($option);
+        }
         return to_route('questions');
     }
 
     protected function rules() {
         return [
-            'question.question_text'=> ['string','required'],
-            'question.code_snippet' => ['string','nullable'],
-            'question.answer_explanation' => ['string','nullable'],
-            'question.more_info_link' => ['url','nullable'],
+            'question.question_text'=> ['required','string'],
+            'question.code_snippet' => ['nullable','string'],
+            'question.answer_explanation' => ['required','string'],
+            'question.more_info_link' => ['required','url'],
             'questionOptions' => ['required','array'],
-            'questionOptions.*.option' => ['string','required'],
+            'questionOptions.*.option' => ['required','string'],
         ];
     }
 

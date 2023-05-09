@@ -10,7 +10,7 @@ class QuestionOption extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable = ['options','question_id','correct'];
+    protected $fillable = ['option','question_id','correct'];
 
     protected $casts = ['correct'=>'boolean'];
 
