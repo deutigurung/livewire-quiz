@@ -40,10 +40,10 @@
                                             {{ $question->question_text }}
                                         </td>
                                         <td>
-                                            <a href="" class="inline-flex items-center rounded-md border border-transparent bg-green-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white hover:bg-green-700">
+                                            <a href="{{ route('questions.edit',$question->id)}}" class="inline-flex items-center rounded-md border border-transparent bg-green-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white hover:bg-green-700">
                                                 Edit
                                             </a>
-                                            <button class="rounded-md border border-transparent bg-red-200 px-4 py-2 text-xs uppercase text-red-500 hover:bg-red-300 hover:text-red-700">
+                                            <button wire:click="delete({{$question}})" class="rounded-md border border-transparent bg-red-200 px-4 py-2 text-xs uppercase text-red-500 hover:bg-red-300 hover:text-red-700">
                                                 Delete
                                             </button>
                                         </td>
