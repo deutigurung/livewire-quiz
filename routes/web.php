@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Questions\QuestionList;
 use App\Http\Livewire\Questions\QuestionForm;
+use App\Http\Livewire\Quiz\QuizList;
+use App\Http\Livewire\Quiz\QuizForm;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/questions',QuestionList::class)->name('questions');
         Route::get('/questions/create',QuestionForm::class)->name('questions.create');
         Route::get('/questions/{question}',QuestionForm::class)->name('questions.edit');
+
+        Route::get('/quizzes',QuizList::class)->name('quizzes');
+        Route::get('/quizzes/create',QuizForm::class)->name('quizzes.create');
+        Route::get('/quizzes/{quizzes}',QuizForm::class)->name('quizzes.edit');
 
     });
 });
