@@ -7,12 +7,15 @@ use App\Models\Quiz;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
+use function PHPUnit\Framework\isEmpty;
+
 class QuizForm extends Component
 {
     public Quiz $quiz;
     public bool $editing = false;
+    public array $questions = [];
+    public array $listsForFields;
 
-    public array $listsForFields = [];
     protected function rules() {
         return [
             'quiz.title'=> ['required','string'],
@@ -32,10 +35,11 @@ class QuizForm extends Component
         $this->initialListsForFields();
         if($this->quiz->exists){
             $this->editing = true;
+            //render question in edit page
+            $this->questions = !isEmpty($this->quiz->questions()) ? $this->quiz->questions()->pluck('id')->toArray() : [];
         }else{
             $this->quiz->published = false;
             $this->quiz->public = false;
-
         }
     }
 
@@ -43,6 +47,7 @@ class QuizForm extends Component
     {
         $this->validate();
         $this->quiz->save();
+        $this->quiz->questions()->sync($this->questions);
         return to_route('quizzes');
     }
 

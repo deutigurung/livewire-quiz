@@ -17,4 +17,8 @@ class Quiz extends Model
     protected $casts = [ 
         'published' => 'boolean','public' => 'boolean'
     ];
+
+    public function questions(){
+        return $this->belongsToMany(Question::class,'question_quiz','quiz_id','question_id');
+    }
 }

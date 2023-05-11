@@ -25,7 +25,7 @@
             Livewire.hook('message.processed',(message,component)=>{
                 initSelect()
             })
-            element.on('chanage',function(e){
+            element.on('change',function(e){
                 let data = $(this).select2("val");
                 if(data === ""){
                     data = null
