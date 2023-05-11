@@ -20,7 +20,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::if('admin',function(){
-            return auth()->user()->is_admin;
+            // The ?-> operator is a null-safe dereferencing operator 
+            // which checks if the left-hand side of the operator is not null, 
+            // then calls the method is_admin on the user object
+            return auth()->user()?->is_admin;
         });
     }
 }
