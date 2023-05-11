@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/quizzes',QuizList::class)->name('quizzes');
         Route::get('/quizzes/create',QuizForm::class)->name('quizzes.create');
-        Route::get('/quizzes/{quizzes}',QuizForm::class)->name('quizzes.edit');
+        Route::get('/quizzes/{quiz}',QuizForm::class)->name('quizzes.edit');
 
     });
 });

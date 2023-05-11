@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Quiz;
 
+use App\Models\Question;
 use App\Models\Quiz;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -11,6 +12,7 @@ class QuizForm extends Component
     public Quiz $quiz;
     public bool $editing = false;
 
+    public array $listsForFields = [];
     protected function rules() {
         return [
             'quiz.title'=> ['required','string'],
@@ -27,6 +29,7 @@ class QuizForm extends Component
 
     public function mount(Quiz $quiz){
         $this->quiz = $quiz;
+        $this->initialListsForFields();
         if($this->quiz->exists){
             $this->editing = true;
         }else{
@@ -48,5 +51,9 @@ class QuizForm extends Component
     // similar to updatedFooBar 
     public function updatedQuizTitle(){
         $this->quiz->slug = Str::slug($this->quiz->title);
+    }
+
+    protected function initialListsForFields(){
+        $this->listsForFields['questions'] = Question::pluck('question_text','id')->toArray();
     }
 }

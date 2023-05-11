@@ -28,6 +28,13 @@
                             <x-textarea wire:model.defer="quiz.description" id="description" class="block mt-1 w-full" type="text" name="description" />
                             <x-input-error :messages="$errors->get('quiz.description')" class="mt-2"/>
                         </div>
+
+                        <div>
+                            <x-input-label for="questions" value="Questions" />
+                            <x-select-list id="questions" class="w-full" name="questions" wire:model="questions" :options="$this->listsForFields['questions']" multiple/>
+                            <x-input-error :messages="$errors->get('questions')" class="mt-2"/>
+                        </div>
+
                         <div class="mt-4">
                             <div class="flex items-center">
                                 <x-input-label for="published" value="Published"/>

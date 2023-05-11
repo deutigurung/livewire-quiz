@@ -64,10 +64,10 @@
                                             <input class="disabled:opacity-50 disabled:cursor-not-allowed" type="checkbox"  >
                                         </td>
                                         <td>
-                                            <a class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white hover:bg-gray-700">
+                                            <a href="{{ route('quizzes.edit',$quiz->id)}}" class="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white hover:bg-gray-700">
                                                 Edit
                                             </a>
-                                            <button class="rounded-md border border-transparent bg-red-200 px-4 py-2 text-xs uppercase text-red-500 hover:bg-red-300 hover:text-red-700">
+                                            <button wire:click="destroy({{$quiz}})" class="rounded-md border border-transparent bg-red-200 px-4 py-2 text-xs uppercase text-red-500 hover:bg-red-300 hover:text-red-700">
                                                 Delete
                                             </button>
                                         </td>
