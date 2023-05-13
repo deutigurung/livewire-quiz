@@ -22,6 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('quiz/{quiz}/{slug?}', [HomeController::class, 'show'])->name('quiz.show'); 
 
 Route::get('/dashboard', function () {
     return view('dashboard');
