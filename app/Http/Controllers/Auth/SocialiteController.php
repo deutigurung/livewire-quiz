@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Hash;
+
 class SocialiteController extends Controller
 {
     public function loginSocial(Request $request , string $provider) {
@@ -21,9 +23,12 @@ class SocialiteController extends Controller
  
         $user = User::firstOrCreate([
             'email' => $response->getEmail(),
-            'password' => '',
         ]);
-        $data = [$provider.'_id' => $response->getId()];
+        $data = [
+            'name' => $response->name,
+            'password' => Hash::make('password'),
+            $provider.'_id' => $response->getId()
+        ];
         $user->update($data);
         Auth::login($user);
      
