@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Questions\QuestionList;
 use App\Http\Livewire\Questions\QuestionForm;
@@ -23,6 +24,8 @@ Route::get('/', function () {
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('quiz/{quiz}/{slug?}', [HomeController::class, 'show'])->name('quiz.show'); 
+Route::get('results/{test}', [ResultController::class, 'show'])->name('results.show'); 
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
