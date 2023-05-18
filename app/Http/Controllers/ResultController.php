@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class ResultController extends Controller
 {
+
+    public function index(){
+        $results = Test::with('quiz')->withCount('questions')
+                    ->where('user_id', auth()->id())->paginate();
+        return view('front.results.index', compact('results'));
+    }
     public function show(Test $test){
         $test->load('user','quiz');
         $users = null;

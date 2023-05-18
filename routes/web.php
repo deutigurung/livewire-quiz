@@ -24,6 +24,9 @@ Route::get('/', function () {
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('quiz/{quiz}/{slug?}', [HomeController::class, 'show'])->name('quiz.show'); 
+
+
+Route::get('results', [ResultController::class, 'index'])->name('results.index'); 
 Route::get('results/{test}', [ResultController::class, 'show'])->name('results.show'); 
 
 
