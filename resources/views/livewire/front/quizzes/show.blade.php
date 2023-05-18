@@ -1,4 +1,26 @@
-<div>
+<!--
+     Here,we use Alpine js which is js framework
+    x-data -> declare a new Alpine component and its data for a block of HTML ,
+            here it provide secondsLeft as reactive data from config file
+    x-init -> run code when an element is initialized,here it initialize timer
+    x-text-> text content of element,here we show timer to user
+    x-on ->listen browser events
+-->
+
+
+<div 
+    x-data="{ secondsLeft: {{ config('quiz.secondsPerQuestion')}} }"
+    x-init="setInterval(()=>{ 
+        if(secondsLeft > 1){
+            secondsLeft--;
+        }  else {
+            secondsLeft = {{ config('quiz.secondsPerQuestion')}};
+            $wire.changeQuestion();
+        }
+    },1000);">
+    <div class="mb-2">
+        Time left for this question: <span class="font-bold" x-text="secondsLeft"></span> sec.
+    </div>
     <span class="text-bold">
         Question  {{ $currentQuestionIndex + 1 }} of {{ $this->questionsCount }}:
     </span>
@@ -21,7 +43,7 @@
 
     @if($currentQuestionIndex < $this->questionsCount - 1)
         <div class="mt-4">
-            <x-secondary-button wire:click="changeQuestion">
+            <x-secondary-button x-on:click="secondsLeft = {{ config('quiz.secondsPerQuestion')}}; $wire.changeQuestion()">
                 Next question
             </x-secondary-button>
         </div>

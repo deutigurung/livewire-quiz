@@ -44,6 +44,11 @@ class Show extends Component
 
     public function changeQuestion(){
         $this->currentQuestionIndex++;
+
+        //if currentQuestionIndex is equal or qreater to question,we call submitAnswer method
+        if($this->currentQuestionIndex >= $this->questionsCount){
+            return $this->submitAnswer();
+        }
         $this->currentQuestion = $this->questions[$this->currentQuestionIndex];
     }
 
