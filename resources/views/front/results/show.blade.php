@@ -35,11 +35,46 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    
+    @if($users)
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-12">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h6 class="text-xl font-bold">Leaderboard</h6>
+    
+                    <table class="table mt-4 w-full table-view">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Username</th>
+                                <th>Correct answers</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            @forelse($users as $user)
+                                <tr @class(['bg-slate-100' => auth()->user() && auth()->user()->name == $user->name])>
+                                    <td class="w-9">{{ $loop->iteration }}</td>
+                                    <td class="w-1/2">{{ $user->name }}</td>
+                                    <td>{{ $user->correct }} / {{ $total_questions }}
+                                        (time: {{ intval($user->time_spent / 60) }}:{{ gmdate('s', $user->time_spent) }} minutes)</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3">No results</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-12">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900">
                 <h6 class="text-xl font-bold">Questions and Answers</h6>
-                
+
                 @foreach($results as $result)
                     <table class="table table-view w-full my-4 bg-white">
                         <tbody class="bg-white">
@@ -91,5 +126,6 @@
             </div>
         </div>
     </div>
+
     
 </x-app-layout>
