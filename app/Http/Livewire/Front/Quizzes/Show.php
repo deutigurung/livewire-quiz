@@ -4,6 +4,9 @@ namespace App\Http\Livewire\Front\Quizzes;
 
 use App\Models\Quiz;
 use App\Models\Question;
+use App\Models\QuestionOption;
+use App\Models\TestAnswer;
+use App\Models\Test;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -21,10 +24,10 @@ class Show extends Component
     public function mount()
     {
         $this->startTimeSeconds = now()->timestamp;
+
         $this->questions = Question::query()->inRandomOrder()
                     ->whereRelation('quizzes','quizzes.id',$this->quiz->id)
                     ->with('questionOptions')->get(); 
-                    
         $this->currentQuestion = $this->questions[$this->currentQuestionIndex];
         //$this->questionsCount is computed properties
         for($i=0;$i < $this->questionsCount; $i++){
@@ -44,16 +47,38 @@ class Show extends Component
 
     public function changeQuestion(){
         $this->currentQuestionIndex++;
-
         //if currentQuestionIndex is equal or qreater to question,we call submitAnswer method
         if($this->currentQuestionIndex >= $this->questionsCount){
             return $this->submitAnswer();
         }
         $this->currentQuestion = $this->questions[$this->currentQuestionIndex];
+        // dd($this->currentQuestion);
     }
 
     public function submitAnswer() {
-        dd('submit');
+        $result = 0;
+        $test = Test::create([
+            'user_id' => auth()->id(),
+            'quiz_id' => $this->quiz->id,
+            'result' => 0,
+            'ip_address' => request()->ip(),
+            'time_spent' => now()->timestamp - $this->startTimeSeconds
+        ]);
+        foreach($this->questionsAnswers as $key => $answer){
+            $status = 0;
+            if(!empty($answer) && QuestionOption::find($answer)->correct){
+                $status = 1; $result++;
+            }
+            TestAnswer::create([
+                'user_id' => auth()->id(),
+                'test_id' => $test->id,
+                'question_id' => $this->questions[$key]->id,
+                'option_id' => $answer ?? null,
+                'correct' => $status,
+            ]);
+        }
+        $test->update(['result'=>$result]);
+        return to_route('home');
     }
 }
 

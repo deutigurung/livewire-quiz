@@ -1,20 +1,10 @@
-<!--
-     Here,we use Alpine js which is js framework
-    x-data -> declare a new Alpine component and its data for a block of HTML ,
-            here it provide secondsLeft as reactive data from config file
-    x-init -> run code when an element is initialized,here it initialize timer
-    x-text-> text content of element,here we show timer to user
-    x-on ->listen browser events
--->
-
-
-<div 
-    x-data="{ secondsLeft: {{ config('quiz.secondsPerQuestion')}} }"
-    x-init="setInterval(()=>{ 
-        if(secondsLeft > 1){
+<div
+    x-data="{ secondsLeft: {{ config('quiz.secondsPerQuestion') }} }"
+    x-init="setInterval(() => {
+        if (secondsLeft > 1) {
             secondsLeft--;
-        }  else {
-            secondsLeft = {{ config('quiz.secondsPerQuestion')}};
+        } else {
+            secondsLeft = {{ config('quiz.secondsPerQuestion') }};
             $wire.changeQuestion();
         }
     },1000);">
@@ -31,14 +21,18 @@
     @endif
 
     @foreach($currentQuestion->questionOptions as $option)
-    <div>
-        <label for="option.{{$option->id}}">
-            <input type="radio" name="questionsAnswers.{{$currentQuestionIndex}}" id="options.{{$option->id}}" 
-            wire:model.defer="questionsAnswers.{{$currentQuestionIndex}}"
-            value="{{ $option->id}}">
-            {{ $option->option}}
-        </label>
-    </div>
+        <div>
+            <label for="option.{{$option->id}}">
+                <input
+                    type="radio"
+                    name="questionsAnswers.{{$currentQuestionIndex}}"
+                    id="options.{{$option->id}}"
+                    wire:model.defer="questionsAnswers.{{$currentQuestionIndex}}"
+                    value="{{ $option->id }}"
+                >
+                {{ $option->option }}
+            </label>
+        </div>
     @endforeach
 
     @if($currentQuestionIndex < $this->questionsCount - 1)
