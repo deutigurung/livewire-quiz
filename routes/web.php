@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\Admin\TestController;
 use App\Http\Livewire\Front\Leaderboard;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Questions\QuestionList;
@@ -48,6 +49,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/quizzes',QuizList::class)->name('quizzes');
         Route::get('/quizzes/create',QuizForm::class)->name('quizzes.create');
         Route::get('/quizzes/{quiz}',QuizForm::class)->name('quizzes.edit');
+
+        Route::get('tests',TestController::class)->name('tests');
 
     });
 });
